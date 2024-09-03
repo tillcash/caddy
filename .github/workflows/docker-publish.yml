@@ -1,0 +1,45 @@
+name: Create and publish a Docker image
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*'
+  repository_dispatch:
+    types:
+      - http_shortcuts
+      - n8n
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read      # Required to read the repository
+      packages: write     # Required to push the Docker image
+
+    steps:
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Build and push Docker image
+        id: push
+        uses: docker/build-push-action@v6
+        with:
+          context: .  # Ensure this points to where your Dockerfile is located
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
+          build-args: |
+            CADDY_VERSION=${{ github.ref_name }}
