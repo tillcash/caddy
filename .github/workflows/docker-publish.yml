@@ -46,6 +46,6 @@ jobs:
           build-args: |
             CADDY_VERSION=${{ env.CADDY_VERSION }}
           tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.CADDY_VERSION }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-acmedns:latest
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.CADDY_VERSION }}-acmedns
           platforms: linux/amd64,linux/arm64
