@@ -10,7 +10,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  CADDY_VERSION: 2.9.1
+  CADDY_VERSION: 2.9
 
 jobs:
   build-and-push-image:
