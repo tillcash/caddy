@@ -43,8 +43,6 @@ jobs:
           context: .  # Ensure this points to where your Dockerfile is located
           push: true
           provenance: false  # Disable provenance metadata
-          build-args: |
-            CADDY_VERSION=${{ env.CADDY_VERSION }}
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.CADDY_VERSION }}
